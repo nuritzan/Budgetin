@@ -29,12 +29,12 @@ struct SummaryPage: View {
                             .font(Font.title2)
                             .fontWeight(.medium)
                             .foregroundStyle(Color("PrimaryWhite"))
-                            .frame(width: 44, height: 44)
-                            .background(Color("PrimaryGreen"))
-                            .clipShape(.circle)
-                            .glassEffect()
-                            .frame(alignment: .trailing)
+                            .frame(width: 29, height: 29)
                     }
+                    .buttonStyle(.glassProminent)
+                    .tint(Color("PrimaryGreen"))
+                    .buttonBorderShape(.circle)
+                    
                     .sheet(isPresented: $isAddTransactionSheetPresented) {
                         AddTransactionSheet()
                     }
@@ -47,11 +47,12 @@ struct SummaryPage: View {
                 
                 Spacer()
             }
-            .padding()
         }
     }
 }
 
 #Preview {
-    SummaryPage()
+    NavigationStack {
+        SummaryPage()
+    }
 }
