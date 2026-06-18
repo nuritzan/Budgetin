@@ -37,7 +37,6 @@ struct MainCard: View {
         .frame(width: 360)
         .glassEffect(in: .rect(cornerRadius: 24))
         .shadow(radius: 1)
-        .padding(.bottom, 40)
     }
 }
 
