@@ -14,7 +14,7 @@ struct StatisticsPage: View {
                 .ignoresSafeArea()
             
             ScrollView {
-                VStack(spacing: 40) {
+                VStack(spacing: 30) {
                     Text("Statistics")
                         .font(Font.largeTitle.bold())
                         .foregroundStyle(Color("PrimaryBlack"))

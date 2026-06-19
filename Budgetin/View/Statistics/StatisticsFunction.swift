@@ -9,12 +9,32 @@ import SwiftUI
 import Charts
 
 struct StatisticsFunction: View {
+    @State private var selectedDate: Date = Date()
+    
     var body: some View {
         VStack(spacing: 40) {
             VStack(spacing: 8) {
-                dateRow(label: "Start Date", dateString: "13 May 2026")
+                DatePicker(
+                    "Start Date",
+                    selection: $selectedDate,
+                    displayedComponents: .date
+                )
+                .fontWeight(.medium)
+                .foregroundStyle(Color("PrimaryBlack"))
+                .tint(Color("PrimaryGreen"))
+                .frame(height: 30)
+                
                 Divider()
-                dateRow(label: "End Date", dateString: "12 Jun 2026")
+                
+                DatePicker(
+                    "End Date",
+                    selection: $selectedDate,
+                    displayedComponents: .date
+                )
+                .fontWeight(.medium)
+                .foregroundStyle(Color("PrimaryBlack"))
+                .tint(Color("PrimaryGreen"))
+                .frame(height: 30)
             }
             .padding(16)
             .glassEffect(in: .rect(cornerRadius: 20))
