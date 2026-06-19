@@ -155,6 +155,15 @@ struct AddTransactionSheet: View {
             }
             .padding(.top, 20)
         }
+        .onTapGesture {
+            hideKeyboard()
+        }
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
