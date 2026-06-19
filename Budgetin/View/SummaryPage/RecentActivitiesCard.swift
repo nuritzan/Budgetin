@@ -35,15 +35,13 @@ func rowTransactions(category: String, description: String, amount: String) -> s
     HStack{
         HStack(spacing: 10) {
             Image(systemName: style.icon)
-                .font(Font.footnote)
                 .foregroundStyle(style.iconColor)
-                .frame(width: 30, height: 30)
+                .frame(width: 35, height: 35)
                 .background(style.bgColor)
                 .clipShape(.circle)
             
             VStack (alignment: .leading) {
                 Text(category)
-                    .font(Font.callout)
                     .foregroundStyle(Color("PrimaryBlack"))
                     .lineLimit(1)
                 
@@ -55,7 +53,6 @@ func rowTransactions(category: String, description: String, amount: String) -> s
         .frame(maxWidth: .infinity, alignment: .leading)
         
         Text(amount)
-            .font(Font.callout)
             .foregroundStyle(Color("PrimaryRed"))
     }
 }
@@ -74,7 +71,7 @@ struct RecentActivitiesCard: View {
                 } label: {
                     HStack{
                         Text("Transactions")
-                            .font(Font.subheadline)
+                            .fontWeight(.medium)
                             .foregroundStyle(Color("PrimaryBlack"))
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
@@ -100,7 +97,6 @@ struct RecentActivitiesCard: View {
             } label: {
                 HStack {
                     Text("Show All Statistics")
-                        .font(Font.callout)
                         .foregroundStyle(Color("PrimaryBlack"))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
