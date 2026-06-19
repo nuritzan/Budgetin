@@ -8,23 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selection: TabKey = .summary
+    
     var body: some View {
-        NavigationStack {
-            TabView {
-                SummaryPage()
-                    .tabItem{
-                        Image(systemName: "chart.bar.xaxis")
-                        Text("Summary")
-                    }
-                ProfilePage()
-                    .tabItem{
-                        Image(systemName: "person.circle.fill")
-                        Text("Profile")
-                    }
+            TabView(selection: $selection) {
+                Tab ("Summary", systemImage: "chart.bar.xaxis", value: TabKey.summary) {
+                    SummaryPage()
+                }
+                
+                Tab ("Profile", systemImage: "person.circle.fill", value: TabKey.profile) {
+                    ProfilePage()
+                }
+                
+                Tab (value: TabKey.search, role: .search) {
+                    SearchPage()
+                }
             }
             .tint(Color("PrimaryGreen"))
-        }
     }
+}
+
+private enum TabKey: Hashable {
+    case summary, profile, search
 }
 
 #Preview {
