@@ -11,43 +11,45 @@ struct SummaryPage: View {
     @State private var isAddTransactionSheetPresented: Bool = false
     
     var body: some View {
-        ZStack {
-            Color("BackgroundColor")
-                .ignoresSafeArea()
-            
-            VStack(spacing: 48) {
-                HStack {
-                    Text("Summary")
-                        .font(Font.largeTitle.bold())
-                        .foregroundStyle(Color("PrimaryBlack"))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Button{
-                        isAddTransactionSheetPresented = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .font(Font.title2)
-                            .fontWeight(.medium)
-                            .foregroundStyle(Color("PrimaryWhite"))
-                            .frame(width: 29, height: 29)
+        NavigationStack {
+            ZStack {
+                Color("BackgroundColor")
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 48) {
+                    HStack {
+                        Text("Summary")
+                            .font(Font.largeTitle.bold())
+                            .foregroundStyle(Color("PrimaryBlack"))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Button{
+                            isAddTransactionSheetPresented = true
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(Font.title2)
+                                .fontWeight(.medium)
+                                .foregroundStyle(Color("PrimaryWhite"))
+                                .frame(width: 29, height: 29)
+                        }
+                        .buttonStyle(.glassProminent)
+                        .tint(Color("PrimaryGreen"))
+                        .buttonBorderShape(.circle)
+                        
+                        .sheet(isPresented: $isAddTransactionSheetPresented) {
+                            AddTransactionSheet()
+                        }
                     }
-                    .buttonStyle(.glassProminent)
-                    .tint(Color("PrimaryGreen"))
-                    .buttonBorderShape(.circle)
+                    .frame(width: 360)
                     
-                    .sheet(isPresented: $isAddTransactionSheetPresented) {
-                        AddTransactionSheet()
-                    }
+                    MainCard()
+                    
+                    RecentActivitiesCard()
+                    
+                    Spacer()
                 }
-                .frame(width: 360)
-                
-                MainCard()
-                
-                RecentActivitiesCard()
-                
-                Spacer()
+                .padding(.top)
             }
-            .padding(.top)
         }
     }
 }

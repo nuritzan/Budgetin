@@ -10,6 +10,27 @@ import SwiftUI
 struct AddTransactionSheet: View {
     @Environment(\.dismiss) var dismiss
     
+    @State private var amount: String = ""
+    @State private var selectedCategory: String = ""
+    @State private var selectedDate: Date = Date()
+    @State private var selectedTime: Date = Date()
+    @State private var transactionDescription: String = ""
+    
+    let categories = ["Meals", "Household", "Transport", "Shopping", "Subscription", "Health", "Entertainment", "Other"]
+    
+    private func formatRupiah(_ value: String) -> String {
+        let cleanNumber = value.filter{ "0123456789".contains($0) }
+        
+        guard let intValue = Int(cleanNumber) else { return "" }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.decimalSeparator = ","
+        
+        return formatter.string(from: NSNumber(value: intValue)) ?? ""
+    }
+    
     var body: some View {
         ZStack {
             Color("BackgroundColor")
@@ -59,83 +80,70 @@ struct AddTransactionSheet: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(Color("PrimaryBlack"))
                     
-                    Text("Rp35.000")
-                        .font(Font.largeTitle.bold())
-                        .foregroundStyle(Color("PrimaryBlack"))
+                    HStack(spacing: 2) {
+                        Text("Rp")
+                            .font(Font.largeTitle.bold())
+                            .foregroundStyle(Color("PrimaryBlack"))
+                        
+                        TextField("0", text: $amount)
+                            .font(Font.largeTitle.bold())
+                            .foregroundStyle(Color("PrimaryBlack"))
+                            .keyboardType(.numberPad)
+                            .fixedSize()
+                            .onChange(of: amount) { oldValue, newValue in
+                            amount = formatRupiah(newValue)}
+                    }
                 }
                 
                 VStack(spacing: 8){
                     HStack{
                         Text("Category")
                             .font(Font.callout)
-                            .fontWeight(.semibold)
+                            .fontWeight(.medium)
                             .foregroundStyle(Color("PrimaryBlack"))
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        HStack(spacing: 16) {
-                            HStack(spacing: 10) {
-                                Image(systemName: "fork.knife")
-                                    .font(Font.footnote)
-                                    .foregroundStyle(Color("Meals"))
-                                    .frame(width: 30, height: 30)
-                                    .background(Color("MealsBackground"))
-                                    .clipShape(.circle)
-                                Text("Meals")
-                                    .font(Font.callout)
-                                    .foregroundStyle(Color("PrimaryBlack"))
+                        Picker("Select Category", selection: $selectedCategory) {
+                            ForEach(categories, id: \.self) { category in
+                                Text(category).tag(category)
                             }
-                            Image(systemName: "chevron.right")
-                                .font(Font.callout)
-                                .foregroundStyle(Color("PrimaryGray"))
                         }
+                        .tint(Color("PrimaryBlack"))
                     }
                     .frame(height: 30)
                     
                     Divider()
                     
-                    HStack{
-                        Text("Date")
-                            .font(Font.callout)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color("PrimaryBlack"))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        HStack(spacing: 16) {
-                            Text("12 Jun 2026")
-                                .font(Font.callout)
-                                .foregroundStyle(Color("PrimaryBlack"))
-                        }
-                        Image(systemName: "chevron.right")
-                            .font(Font.callout)
-                            .foregroundStyle(Color("PrimaryGray"))
-                    }
+                    DatePicker(
+                        "Date",
+                        selection: $selectedDate,
+                        displayedComponents: .date
+                    )
+                    .font(Font.callout)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color("PrimaryBlack"))
+                    .tint(Color("PrimaryGreen"))
                     .frame(height: 30)
                     
                     Divider()
                     
-                    HStack{
-                        Text("Time")
-                            .font(Font.callout)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color("PrimaryBlack"))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        HStack(spacing: 16) {
-                            Text("09:41 WIB")
-                                .font(Font.callout)
-                                .foregroundStyle(Color("PrimaryBlack"))
-                        }
-                        Image(systemName: "chevron.right")
-                            .font(Font.callout)
-                            .foregroundStyle(Color("PrimaryGray"))
-                    }
+                    DatePicker(
+                        "Time",
+                        selection: $selectedTime,
+                        displayedComponents: .hourAndMinute
+                    )
+                    .font(Font.callout)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color("PrimaryBlack"))
+                    .tint(Color("PrimaryGreen"))
                     .frame(height: 30)
                     
                     Divider()
                     
-                    Text("Description")
+                    TextField("Description", text: $transactionDescription)
                         .font(Font.callout)
-                        .foregroundStyle(Color("PrimaryGray"))
+                        .fontWeight(.medium)
+                        .foregroundStyle(Color("PrimaryBlack"))
                         .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
                 }
                 .padding(20)
@@ -145,7 +153,7 @@ struct AddTransactionSheet: View {
                 
                 Spacer()
             }
-            .padding(20)
+            .padding(.top, 20)
         }
     }
 }
