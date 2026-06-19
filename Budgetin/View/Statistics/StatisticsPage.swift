@@ -9,7 +9,30 @@ import SwiftUI
 
 struct StatisticsPage: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color("BackgroundColor")
+                .ignoresSafeArea()
+            
+            ScrollView {
+                VStack(spacing: 40) {
+                    Text("Statistics")
+                        .font(Font.largeTitle.bold())
+                        .foregroundStyle(Color("PrimaryBlack"))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    StatisticsFunction()
+                    
+                    CategoryCard()
+                }
+                .frame(maxWidth: 360)
+                .frame(maxWidth: .infinity)
+                .padding(.top)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .scrollContentBackground(.hidden)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("BackgroundColor").ignoresSafeArea())
     }
 }
 
