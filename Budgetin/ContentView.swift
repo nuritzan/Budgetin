@@ -13,7 +13,9 @@ struct ContentView: View {
     var body: some View {
             TabView(selection: $selection) {
                 Tab ("Summary", systemImage: "chart.bar.xaxis", value: TabKey.summary) {
-                    SummaryPage()
+                    NavigationStack {
+                        SummaryPage()
+                    }
                 }
                 
                 Tab ("Profile", systemImage: "person.circle.fill", value: TabKey.profile) {
