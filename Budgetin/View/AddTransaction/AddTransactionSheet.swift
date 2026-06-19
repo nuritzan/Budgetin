@@ -24,11 +24,12 @@ struct AddTransactionSheet: View {
                             .font(Font.title2)
                             .fontWeight(.medium)
                             .foregroundStyle(Color("PrimaryBlack"))
-                            .frame(width: 44, height: 44)
-                            .background(Color("CancelButton"))
-                            .clipShape(.circle)
-                            .glassEffect()
+                            .frame(width: 34, height: 34)
                     }
+                    .buttonStyle(.glassProminent)
+                    .tint(Color("CancelButton"))
+                    .buttonBorderShape(.circle)
+                    
                     Spacer()
                     
                     Text("Add Transaction")
@@ -44,11 +45,11 @@ struct AddTransactionSheet: View {
                             .font(Font.title2)
                             .fontWeight(.medium)
                             .foregroundStyle(Color("PrimaryWhite"))
-                            .frame(width: 44, height: 44)
-                            .background(Color("PrimaryGreen"))
-                            .clipShape(.circle)
-                            .glassEffect()
+                            .frame(width: 34, height: 34)
                     }
+                    .buttonStyle(.glassProminent)
+                    .tint(Color("PrimaryGreen"))
+                    .buttonBorderShape(.circle)
                 }
                 .frame(width: 380)
                 
