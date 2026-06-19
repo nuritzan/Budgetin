@@ -47,6 +47,7 @@ struct SummaryPage: View {
                 
                 Spacer()
             }
+            .padding(.top)
         }
     }
 }
