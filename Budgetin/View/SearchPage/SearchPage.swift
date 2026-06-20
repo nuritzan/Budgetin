@@ -51,8 +51,7 @@ struct SearchPage: View {
     var body: some View {
         NavigationStack{
             ZStack {
-                Color("BackgroundColor")
-                    .ignoresSafeArea()
+                BackgroundColor()
                 
                 List(filteredItems, id: \.self) { item in
                     rowSearch(category: item)

@@ -10,8 +10,7 @@ import SwiftUI
 struct ProfilePage: View {
     var body: some View {
         ZStack{
-            Color("BackgroundColor")
-                .ignoresSafeArea()
+            BackgroundColor()
             
             VStack(spacing: 40) {
                 Text("Profile")
