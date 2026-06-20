@@ -7,56 +7,6 @@
 
 import SwiftUI
 
-func getCategoryStyle(category: String) -> (icon: String, iconColor: Color, bgColor: Color) {
-    switch category {
-    case "Meals":
-        return ("fork.knife", Color("Meals"), Color("MealsBackground"))
-    case "Household":
-        return ("house.fill", Color("Household"), Color("HouseholdBackground"))
-    case "Transportation":
-        return ("car.fill", Color("Transport"), Color("TransportBackground"))
-    case "Subscription":
-        return ("creditcard.fill", Color("Subscription"), Color("SubscriptionBackground"))
-    case "Shopping":
-        return ("cart.fill", Color("Shopping"), Color("ShoppingBackground"))
-    case "Entertainment":
-        return ("gamecontroller.fill", Color("Entertainment"), Color("EntertainmentBackground"))
-    case "Health":
-        return ("heart.fill", Color("Health"), Color("HealthBackground"))
-    default:
-        return ("ellipsis.circle.fill", Color("Other"), Color("OtherBackground"))
-    }
-}
-
-@ViewBuilder
-func rowTransactions(category: String, description: String, amount: String) -> some View {
-    let style = getCategoryStyle(category: category)
-    
-    HStack{
-        HStack(spacing: 10) {
-            Image(systemName: style.icon)
-                .foregroundStyle(style.iconColor)
-                .frame(width: 35, height: 35)
-                .background(style.bgColor)
-                .clipShape(.circle)
-            
-            VStack (alignment: .leading) {
-                Text(category)
-                    .foregroundStyle(Color("PrimaryBlack"))
-                    .lineLimit(1)
-                
-                Text(description)
-                    .font(Font.caption2)
-                    .foregroundStyle(Color("PrimaryBlack"))
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        
-        Text(amount)
-            .foregroundStyle(Color("PrimaryRed"))
-    }
-}
-
 struct RecentActivitiesCard: View {
     var body: some View {
         VStack(spacing: 16) {

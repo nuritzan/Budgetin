@@ -13,7 +13,7 @@ struct OnBoardingPage: View {
     var body: some View {
         ZStack {
             if isGetStarted {
-                ContentView()
+                SetupBudgetPage()
                     .transition(.move(edge: .trailing))
                     .zIndex(1)
             } else {
@@ -35,12 +35,12 @@ struct OnBoardingPage: View {
                 VStack(spacing: 350) {
                     VStack {
                         Text("Budgetin")
-                            .font(.system(size: 65))
+                            .font(.system(size: 62))
                             .fontWeight(.bold)
                             .foregroundStyle(Color("PrimaryGreen"))
                         
-                        Text("Track your budget, spend with clarity")
-                            .font(Font.callout)
+                        Text("Set your budget, spend with clarity")
+                            .font(.system(size: 16))
                             .foregroundStyle(.primaryGreen)
                     }
                     
@@ -54,7 +54,6 @@ struct OnBoardingPage: View {
                     }
                     .buttonStyle(.glassProminent)
                     .tint(.primaryGreen)
-                    .shadow(radius: 1)
                 }
             }
         }
