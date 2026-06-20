@@ -51,12 +51,10 @@ struct ProfilePage: View {
                     VStack(spacing: 8) {
                         HStack {
                             Text("Monthly Budget")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryBlack"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Image(systemName: "chevron.right")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryGray"))
                         }
                         
@@ -64,12 +62,10 @@ struct ProfilePage: View {
                         
                         HStack {
                             Text("Categories")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryBlack"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Image(systemName: "chevron.right")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryGray"))
                         }
                         
@@ -77,12 +73,10 @@ struct ProfilePage: View {
                         
                         HStack {
                             Text("Notifications")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryBlack"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Image(systemName: "chevron.right")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryGray"))
                         }
                     }
@@ -103,31 +97,17 @@ struct ProfilePage: View {
                     VStack(spacing: 8) {
                         HStack {
                             Text("Edit Profile")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryBlack"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
                             Image(systemName: "chevron.right")
-                                .font(Font.callout)
-                                .foregroundStyle(Color("PrimaryGray"))
-                        }
-                        
-                        Divider()
-                        
-                        HStack {
-                            Text("Log Out")
-                                .font(Font.callout)
-                                .foregroundStyle(.red)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .font(Font.callout)
                                 .foregroundStyle(Color("PrimaryGray"))
                         }
                     }
                     .padding(20)
                     .frame(maxWidth: .infinity)
-                    .glassEffect(in: .rect(cornerRadius: 24))
+                    .clipShape(.capsule)
+                    .glassEffect()
                     .shadow(radius: 1)
                 }
                 Spacer()

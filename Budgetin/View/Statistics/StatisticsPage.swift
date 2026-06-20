@@ -20,7 +20,7 @@ struct StatisticsPage: View {
                         .foregroundStyle(Color("PrimaryBlack"))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    StatisticsFunction()
+                    ChartCard()
                     
                     CategoryCard()
                 }

@@ -7,32 +7,6 @@
 
 import SwiftUI
 
-@ViewBuilder
-func rowCategories(category: String, amount: String) -> some View {
-    let style = getCategoryStyle(category: category)
-    
-    HStack{
-        HStack(spacing: 10) {
-            Image(systemName: style.icon)
-                .font(Font.footnote)
-                .foregroundStyle(style.iconColor)
-                .frame(width: 30, height: 30)
-                .background(style.bgColor)
-                .clipShape(.circle)
-            
-            Text(category)
-                .font(Font.callout)
-                .foregroundStyle(Color("PrimaryBlack"))
-                .lineLimit(1)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        
-        Text(amount)
-            .font(Font.callout)
-            .foregroundStyle(Color("PrimaryRed"))
-    }
-}
-
 struct CategoryCard: View {
     var body: some View {
         VStack(spacing: 20) {
