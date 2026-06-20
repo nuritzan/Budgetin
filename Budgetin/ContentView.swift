@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+struct BackgroundColor: View {
+    var body: some View {
+        RadialGradient(
+            colors: [Color("BackgroundColor"),
+                     Color("PrimaryGreen").opacity(0.8)
+                    ],
+            center: .top, startRadius: 100, endRadius: 2500
+        )
+        .ignoresSafeArea()
+    }
+}
+
 struct ContentView: View {
     @State private var selection: TabKey = .summary
     

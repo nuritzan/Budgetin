@@ -11,7 +11,7 @@ import SwiftUI
 struct BudgetinApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OnBoardingPage()
         }
     }
 }

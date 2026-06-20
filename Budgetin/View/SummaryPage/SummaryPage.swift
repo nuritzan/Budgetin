@@ -12,8 +12,7 @@ struct SummaryPage: View {
     
     var body: some View {
         ZStack {
-            Color("BackgroundColor")
-                .ignoresSafeArea()
+            BackgroundColor()
             
             VStack(spacing: 48) {
                 HStack {
