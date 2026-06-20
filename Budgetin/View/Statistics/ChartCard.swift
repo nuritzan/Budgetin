@@ -9,14 +9,15 @@ import SwiftUI
 import Charts
 
 struct ChartCard: View {
-    @State private var selectedDate: Date = Date()
+    @State private var startDate: Date = Date()
+    @State private var endDate: Date = Date()
     
     var body: some View {
         VStack(spacing: 40) {
             VStack(spacing: 8) {
                 DatePicker(
                     "Start Date",
-                    selection: $selectedDate,
+                    selection: $startDate,
                     displayedComponents: .date
                 )
                 .fontWeight(.medium)
@@ -28,7 +29,7 @@ struct ChartCard: View {
                 
                 DatePicker(
                     "End Date",
-                    selection: $selectedDate,
+                    selection: $endDate,
                     displayedComponents: .date
                 )
                 .fontWeight(.medium)
