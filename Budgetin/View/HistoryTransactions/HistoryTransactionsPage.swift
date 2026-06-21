@@ -12,8 +12,7 @@ struct HistoryTransactionsPage: View {
     
     var body: some View {
         ZStack{
-            Color("BackgroundColor")
-                .ignoresSafeArea()
+            BackgroundColor()
             
             ScrollView {
                 VStack(spacing: 28) {

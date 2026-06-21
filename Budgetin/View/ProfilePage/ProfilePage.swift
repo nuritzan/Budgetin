@@ -49,35 +49,48 @@ struct ProfilePage: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack(spacing: 8) {
-                        HStack {
-                            Text("Monthly Budget")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color("PrimaryGray"))
+                        NavigationLink{
+                            EditBudgetPage()
+                        } label: {
+                            HStack {
+                                Text("Monthly Budget")
+                                    .foregroundStyle(Color("PrimaryBlack"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color("PrimaryGray"))
+                            }
+                        }
+                        
+                        
+                        Divider()
+                        
+                        NavigationLink{
+                            ContentAvailableSoon()
+                        } label: {
+                            HStack {
+                                Text("Categories")
+                                    .foregroundStyle(Color("PrimaryBlack"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color("PrimaryGray"))
+                            }
                         }
                         
                         Divider()
                         
-                        HStack {
-                            Text("Categories")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color("PrimaryGray"))
-                        }
-                        
-                        Divider()
-                        
-                        HStack {
-                            Text("Notifications")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color("PrimaryGray"))
+                        NavigationLink{
+                            ContentAvailableSoon()
+                        } label: {
+                            HStack {
+                                Text("Notifications")
+                                    .foregroundStyle(Color("PrimaryBlack"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color("PrimaryGray"))
+                            }
                         }
                     }
                     .padding(20)
@@ -95,13 +108,17 @@ struct ProfilePage: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack(spacing: 8) {
-                        HStack {
-                            Text("Edit Profile")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color("PrimaryGray"))
+                        NavigationLink{
+                            ContentAvailableSoon()
+                        } label: {
+                            HStack {
+                                Text("Edit Profile")
+                                    .foregroundStyle(Color("PrimaryBlack"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color("PrimaryGray"))
+                            }
                         }
                     }
                     .padding(20)

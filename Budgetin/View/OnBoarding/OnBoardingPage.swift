@@ -32,29 +32,29 @@ struct OnBoardingPage: View {
             VStack {
                 Spacer()
                 
-                VStack(spacing: 350) {
-                    VStack {
-                        Text("Budgetin")
-                            .font(.system(size: 62))
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color("PrimaryGreen"))
-                        
-                        Text("Set your budget, spend with clarity")
-                            .font(.system(size: 16))
-                            .foregroundStyle(.primaryGreen)
-                    }
+                VStack {
+                    Text("Budgetin")
+                        .font(.system(size: 62))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color("PrimaryGreen"))
                     
-                    Button {
-                        isGetStarted = true
-                    } label: {
-                        Text("Get Started")
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.primaryWhite)
-                            .frame(width: 300, height: 35)
-                    }
-                    .buttonStyle(.glassProminent)
-                    .tint(.primaryGreen)
+                    Text("Set your budget, spend with clarity")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.primaryGreen)
                 }
+                
+                Spacer()
+                
+                Button {
+                    isGetStarted = true
+                } label: {
+                    Text("Get Started")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.primaryWhite)
+                        .frame(width: 300, height: 35)
+                }
+                .buttonStyle(.glassProminent)
+                .tint(.primaryGreen)
             }
         }
     }

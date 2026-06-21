@@ -37,7 +37,7 @@ struct ChartCard: View {
                 .tint(Color("PrimaryGreen"))
                 .frame(height: 30)
             }
-            .padding(16)
+            .padding(20)
             .glassEffect(in: .rect(cornerRadius: 20))
             .shadow(radius: 1)
             
