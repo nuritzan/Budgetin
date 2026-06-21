@@ -16,6 +16,7 @@ struct ContentAvailableSoon: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.primaryBlack)
             }
+            .frame(width: 360)
         }
     }
 }
