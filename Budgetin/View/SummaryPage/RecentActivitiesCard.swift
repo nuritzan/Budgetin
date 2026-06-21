@@ -40,7 +40,7 @@ struct RecentActivitiesCard: View {
             .padding(20)
             .frame(maxWidth: .infinity)
             .glassEffect(in: .rect(cornerRadius: 24))
-            .shadow(radius: 1)
+//            .shadow(radius: 1)
             
             NavigationLink{
                 StatisticsPage()
@@ -59,7 +59,7 @@ struct RecentActivitiesCard: View {
                 .frame(maxWidth: .infinity)
                 .clipShape(.capsule)
                 .glassEffect()
-                .shadow(radius: 1)
+//                .shadow(radius: 1)
             }
             
             

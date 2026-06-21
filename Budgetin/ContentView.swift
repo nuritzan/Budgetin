@@ -13,7 +13,7 @@ struct BackgroundColor: View {
             colors: [Color("BackgroundColor"),
                      Color("PrimaryGreen").opacity(0.8)
                     ],
-            center: .top, startRadius: 100, endRadius: 2000
+            center: .top, startRadius: 400, endRadius: 3000
         )
         .ignoresSafeArea()
     }

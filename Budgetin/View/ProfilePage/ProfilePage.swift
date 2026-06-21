@@ -40,7 +40,7 @@ struct ProfilePage: View {
                 .padding(20)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassEffect(in: .rect(cornerRadius: 24))
-                .shadow(radius: 1)
+//                .shadow(radius: 1)
                 
                 VStack(spacing: 8) {
                     Text("Preferences")
@@ -96,7 +96,7 @@ struct ProfilePage: View {
                     .padding(20)
                     .frame(maxWidth: .infinity)
                     .glassEffect(in: .rect(cornerRadius: 24))
-                    .shadow(radius: 1)
+//                    .shadow(radius: 1)
                 }
                 
                 
@@ -125,7 +125,7 @@ struct ProfilePage: View {
                     .frame(maxWidth: .infinity)
                     .clipShape(.capsule)
                     .glassEffect()
-                    .shadow(radius: 1)
+//                    .shadow(radius: 1)
                 }
                 Spacer()
             }
