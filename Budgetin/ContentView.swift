@@ -31,7 +31,9 @@ struct ContentView: View {
                 }
                 
                 Tab ("Profile", systemImage: "person.circle.fill", value: TabKey.profile) {
-                    ProfilePage()
+                    NavigationStack {
+                        ProfilePage()
+                    }
                 }
                 
                 Tab (value: TabKey.search, role: .search) {

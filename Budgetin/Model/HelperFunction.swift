@@ -29,6 +29,13 @@ func getCategoryStyle(category: String) -> (icon: String, iconColor: Color, bgCo
     }
 }
 
+func formatRupiah(_ value: Double) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.groupingSeparator = "."
+    return formatter.string(from: NSNumber(value: value)) ?? "0"
+}
+
 @ViewBuilder
 func rowCategories(category: String, amount: String) -> some View {
     let style = getCategoryStyle(category: category)

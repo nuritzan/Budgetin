@@ -37,7 +37,7 @@ struct RecentActivitiesCard: View {
                 rowTransactions(category: "Transportation", description: "Commuter", amount: "-Rp6.000")
                 rowTransactions(category: "Meals", description: "Dinner", amount: "-Rp32.500")
             }
-            .padding(16)
+            .padding(20)
             .frame(maxWidth: .infinity)
             .glassEffect(in: .rect(cornerRadius: 24))
             .shadow(radius: 1)
@@ -55,7 +55,7 @@ struct RecentActivitiesCard: View {
                         .foregroundStyle(Color("PrimaryGray"))
                         .frame(alignment: .trailing)
                 }
-                .padding(16)
+                .padding(20)
                 .frame(maxWidth: .infinity)
                 .clipShape(.capsule)
                 .glassEffect()
