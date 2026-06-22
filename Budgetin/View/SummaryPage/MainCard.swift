@@ -13,13 +13,12 @@ struct MainCard: View {
             VStack(spacing: 4) {
                 Text("Monthly Budget")
                     .font(Font.title3)
-                    .fontWeight(.semibold)
                     .foregroundStyle(Color("PrimaryBlack"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text("Rp3.500.000")
-                    .font(Font.title3)
-                    .fontWeight(.medium)
+                    .font(Font.title2)
+                    .fontWeight(.semibold)
                     .foregroundStyle(Color("PrimaryBlack"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -29,7 +28,7 @@ struct MainCard: View {
                 .tint(Color("PrimaryGreen"))
             
             Text("Rp596.500 remaining")
-                .font(Font.title2.bold())
+                .font(Font.title2.weight(.semibold))
                 .foregroundStyle(Color("PrimaryBlack"))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
