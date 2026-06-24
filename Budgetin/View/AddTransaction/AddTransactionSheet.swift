@@ -18,19 +18,6 @@ struct AddTransactionSheet: View {
     
     let categories = ["Meals", "Household", "Transport", "Shopping", "Subscription", "Health", "Entertainment", "Other"]
     
-    private func formatRupiah(_ value: String) -> String {
-        let cleanNumber = value.filter{ "0123456789".contains($0) }
-        
-        guard let intValue = Int(cleanNumber) else { return "" }
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = "."
-        formatter.decimalSeparator = ","
-        
-        return formatter.string(from: NSNumber(value: intValue)) ?? ""
-    }
-    
     var body: some View {
         ZStack {
             Color("BackgroundColor")
