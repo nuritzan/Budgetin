@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddTransactionSheet: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var modelContext
     
     @State private var amount: String = ""
     @State private var selectedCategory: String = ""
@@ -16,7 +18,60 @@ struct AddTransactionSheet: View {
     @State private var selectedTime: Date = Date()
     @State private var transactionDescription: String = ""
     
-    let categories = ["Meals", "Household", "Transport", "Shopping", "Subscription", "Health", "Entertainment", "Other"]
+    private var isFormValid: Bool {
+        let cleanAmount = amount.filter { $0.isNumber }
+        let isAmountValid = (Int(cleanAmount) ?? 0) > 0
+        
+        let isCategoryValid = !selectedCategory.isEmpty
+        
+        let isDescriptionValid = !transactionDescription.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        
+        return isAmountValid && isCategoryValid && isDescriptionValid
+    }
+    
+    private func saveTransaction() {
+        let cleanAmount = amount.filter { $0.isNumber }
+
+        guard let amountValue = Int(cleanAmount), amountValue > 0 else {
+            return
+        }
+
+        guard !selectedCategory.isEmpty else {
+            return
+        }
+
+        let calendar = Calendar.current
+
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
+
+        var combinedComponents = DateComponents()
+        combinedComponents.year = dateComponents.year
+        combinedComponents.month = dateComponents.month
+        combinedComponents.day = dateComponents.day
+        combinedComponents.hour = timeComponents.hour
+        combinedComponents.minute = timeComponents.minute
+
+        guard let combinedDateTime = calendar.date(from: combinedComponents) else {
+            return
+        }
+
+        let transaction = DataTransaction(
+            amount: amountValue,
+            category: selectedCategory,
+            dateTime: combinedDateTime,
+            transactionDescription: transactionDescription.isEmpty ? "-" : transactionDescription
+        )
+
+        modelContext.insert(transaction)
+
+        do {
+            try modelContext.save()
+            dismiss()
+        } catch {
+            print("Failed to save transaction: \(error.localizedDescription)")
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -47,96 +102,28 @@ struct AddTransactionSheet: View {
                     Spacer()
                     
                     Button{
-                        dismiss()
+                        saveTransaction()
                     } label: {
                         Image(systemName: "checkmark")
                             .font(Font.title2)
                             .fontWeight(.medium)
-                            .foregroundStyle(Color("PrimaryWhite"))
+                            .foregroundStyle(isFormValid ? Color("PrimaryWhite"): Color("PrimaryBlack"))
                             .frame(width: 34, height: 34)
                     }
                     .buttonStyle(.glassProminent)
-                    .tint(Color("PrimaryGreen"))
+                    .tint(isFormValid ? Color("PrimaryGreen"): .gray)
                     .buttonBorderShape(.circle)
+                    .disabled(!isFormValid)
                 }
                 .frame(width: 380)
                 
-                VStack(spacing: 8) {
-                    Text("Amount")
-                        .font(Font.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color("PrimaryBlack"))
-                    
-                    HStack(spacing: 2) {
-                        Text("Rp")
-                            .font(Font.largeTitle.bold())
-                            .foregroundStyle(Color("PrimaryBlack"))
-                        
-                        TextField("0", text: $amount)
-                            .font(Font.largeTitle.bold())
-                            .foregroundStyle(Color("PrimaryBlack"))
-                            .keyboardType(.numberPad)
-                            .fixedSize()
-                            .onChange(of: amount) { oldValue, newValue in
-                            amount = formatRupiah(newValue)}
-                    }
-                }
-                
-                VStack(spacing: 8){
-                    HStack{
-                        Text("Category")
-                            .font(Font.callout)
-                            .fontWeight(.medium)
-                            .foregroundStyle(Color("PrimaryBlack"))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Picker("Select Category", selection: $selectedCategory) {
-                            ForEach(categories, id: \.self) { category in
-                                Text(category).tag(category)
-                            }
-                        }
-                        .tint(Color("PrimaryBlack"))
-                    }
-                    .frame(height: 30)
-                    
-                    Divider()
-                    
-                    DatePicker(
-                        "Date",
-                        selection: $selectedDate,
-                        displayedComponents: .date
-                    )
-                    .font(Font.callout)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color("PrimaryBlack"))
-                    .tint(Color("PrimaryGreen"))
-                    .frame(height: 30)
-                    
-                    Divider()
-                    
-                    DatePicker(
-                        "Time",
-                        selection: $selectedTime,
-                        displayedComponents: .hourAndMinute
-                    )
-                    .font(Font.callout)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color("PrimaryBlack"))
-                    .tint(Color("PrimaryGreen"))
-                    .frame(height: 30)
-                    
-                    Divider()
-                    
-                    TextField("Description", text: $transactionDescription)
-                        .font(Font.callout)
-                        .fontWeight(.medium)
-                        .foregroundStyle(Color("PrimaryBlack"))
-                        .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
-                }
-                .padding(20)
-                .frame(width: 360)
-                .glassEffect(in: .rect(cornerRadius: 24))
-//                .shadow(radius: 1)
+                FormAddTransaction(
+                    amount: $amount,
+                    selectedCategory: $selectedCategory,
+                    selectedDate: $selectedDate,
+                    selectedTime: $selectedTime,
+                    transactionDescription: $transactionDescription
+                )
                 
                 Spacer()
             }
