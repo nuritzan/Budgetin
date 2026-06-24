@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BackgroundColor: View {
     var body: some View {
@@ -50,4 +51,5 @@ private enum TabKey: Hashable {
 
 #Preview {
     ContentView()
+        .modelContainer(SampleData.container)
 }

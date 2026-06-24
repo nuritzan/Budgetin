@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BudgetinApp: App {
@@ -13,5 +14,6 @@ struct BudgetinApp: App {
         WindowGroup {
             OnBoardingPage()
         }
+        .modelContainer(for: DataTransaction.self)
     }
 }

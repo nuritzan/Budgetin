@@ -6,9 +6,23 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HistoryTransactionsPage: View {
     @State private var isAddTransactionSheetPresented: Bool = false
+    
+    @Query(sort: \DataTransaction.dateTime, order: .reverse)
+    private var transactions: [DataTransaction]
+    
+    private var transactionSections: [(date: Date, items: [DataTransaction])] {
+        let groupedTransactions = Dictionary(grouping: transactions) { transaction in
+            Calendar.current.startOfDay(for: transaction.dateTime)
+        }
+
+        return groupedTransactions
+            .map { (date: $0.key, items: $0.value) }
+            .sorted { $0.date > $1.date }
+    }
     
     var body: some View {
         ZStack{
@@ -22,47 +36,20 @@ struct HistoryTransactionsPage: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
                     VStack(spacing: 24) {
-                        VStack(spacing: 16) {
-                            Text("Friday, 12 Jun 2026")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            rowTransactions(category: "Subscription", description: "iCloud", amount: "-Rp15.000")
-                            rowTransactions(category: "Transportation", description: "Online Taxi", amount: "-Rp18.000")
-                            rowTransactions(category: "Transportation", description: "Commuter", amount: "-Rp6.000")
-                            rowTransactions(category: "Meals", description: "Dinner", amount: "-Rp32.500")
-                            rowTransactions(category: "Meals", description: "Lunch", amount: "-Rp30.000")
-                        }
-                        
-                        VStack(spacing: 16) {
-                            Text("Thursday, 11 Jun 2026")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            rowTransactions(category: "Shopping", description: "Skincare", amount: "-Rp80.000")
-                            rowTransactions(category: "Household", description: "House Rent", amount: "-Rp1.000.000")
-                            rowTransactions(category: "Entertainment", description: "Badminton", amount: "-Rp25.000")
-                        }
-                        
-                        VStack(spacing: 16) {
-                            Text("Wednesday, 10 Jun 2026")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            rowTransactions(category: "Health", description: "BPJS", amount: "Rp100.000")
-                            rowTransactions(category: "Other", description: "Admin Fees", amount: "Rp1.000")
-                            rowTransactions(category: "Meals", description: "Dinner", amount: "Rp40.000")
-                            
-                        }
-                        
-                        VStack(spacing: 16) {
-                            Text("Tuesday, 9 Jun 2026")
-                                .foregroundStyle(Color("PrimaryBlack"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            rowTransactions(category: "Subscription", description: "Netflix", amount: "-65.000")
-                            rowTransactions(category: "Meals", description: "Dinner", amount: "-35.000")
-                            rowTransactions(category: "Transportation", description: "Commuter", amount: "-Rp3.000")
+                        ForEach(transactionSections, id: \.date) { section in
+                            VStack(spacing: 16) {
+                                Text(section.date.formatted(.dateTime.weekday(.wide).day().month(.abbreviated).year()))
+                                    .foregroundStyle(Color("PrimaryBlack"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ForEach(section.items) { transaction in
+                                    rowTransactions(
+                                        category: transaction.category,
+                                        description: transaction.transactionDescription,
+                                        amount: "-Rp\(formatRupiah(String(transaction.amount)))"
+                                    )
+                                }
+                            }
                         }
                     }
                     .frame(width: 340)
@@ -98,5 +85,6 @@ struct HistoryTransactionsPage: View {
 #Preview {
     NavigationStack {
         HistoryTransactionsPage()
+            .modelContainer(SampleData.container)
     }
 }
