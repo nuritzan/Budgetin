@@ -29,11 +29,17 @@ func getCategoryStyle(category: String) -> (icon: String, iconColor: Color, bgCo
     }
 }
 
-func formatRupiah(_ value: Double) -> String {
+func formatRupiah(_ value: String) -> String {
+    let cleanNumber = value.filter { $0.isNumber }
+    
+    guard let intValue = Int(cleanNumber) else { return "" }
+    
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.groupingSeparator = "."
-    return formatter.string(from: NSNumber(value: value)) ?? "0"
+    formatter.decimalSeparator = ","
+    
+    return formatter.string(from: NSNumber(value: intValue)) ?? ""
 }
 
 @ViewBuilder

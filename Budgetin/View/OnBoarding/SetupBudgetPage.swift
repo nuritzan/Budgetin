@@ -77,7 +77,7 @@ struct SetupBudgetPage: View {
                     Slider(value: $monthlyBudget, in: 0...10_000_000, step: 50_000)
                         .tint(Color("PrimaryGreen"))
                         .onChange(of: monthlyBudget) { _, newValue in
-                            budgetText = formatRupiah(newValue)
+                            budgetText = formatRupiah(String(Int(newValue)))
                         }
                     
                     HStack {
@@ -125,7 +125,7 @@ struct SetupBudgetPage: View {
         
         let digits = value.filter { $0.isNumber }
         let numericValue = min(Double(digits) ?? 0, 10_000_000)
-        let formattedValue = digits.isEmpty ? "" : formatRupiah(numericValue)
+        let formattedValue = digits.isEmpty ? "" : formatRupiah(String(Int(numericValue)))
         
         isFormattingBudgetText = true
         budgetText = formattedValue
@@ -146,7 +146,7 @@ struct SetupBudgetPage: View {
         
         let clampedValue = min(max(value, 0), 10_000_000)
         monthlyBudget = clampedValue
-        budgetText = formatRupiah(clampedValue)
+        budgetText = formatRupiah(String(Int(clampedValue)))
     }
 }
 
