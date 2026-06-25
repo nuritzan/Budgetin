@@ -8,21 +8,30 @@
 import SwiftUI
 
 struct CategoryCard: View {
+    var summaries: [CategorySummary]
+    
     var body: some View {
         VStack(spacing: 20) {
-            rowCategories(category: "Meals", amount: "-Rp1.509.500")
-            rowCategories(category: "Household", amount: "-Rp1.000.000")
-            rowCategories(category: "Transportation", amount: "-Rp319.500")
-            rowCategories(category: "Shopping", amount: "-Rp232.000")
-            rowCategories(category: "Subscription", amount: "-Rp113.000")
-            rowCategories(category: "Health", amount: "-Rp100.000")
-            rowCategories(category: "Entertainment", amount: "-Rp65.000")
-            rowCategories(category: "Other", amount: "-Rp15.500")
+            if summaries.isEmpty {
+                Text("No data available")
+            } else {
+                ForEach(summaries) { item in
+                    rowCategories(
+                        category: item.category,
+                        amount: "-Rp\(formatRupiah(String(item.amount)))")
+                }
+            }
         }
         .frame(width: 340)
     }
 }
 
 #Preview {
-    CategoryCard()
+    CategoryCard(
+        summaries: [
+            CategorySummary(category: "Meals", amount: 1500000, percentage: 59, color: Color("Meals")),
+            CategorySummary(category: "Transportation", amount: 550000, percentage: 21.6, color: Color("Transport")),
+            CategorySummary(category: "Shopping", amount: 490000, percentage: 19.4, color: Color("Shopping"))
+        ]
+    )
 }
