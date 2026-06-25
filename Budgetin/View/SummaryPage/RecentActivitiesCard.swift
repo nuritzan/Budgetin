@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RecentActivitiesCard: View {
+    @Query(sort: \DataTransaction.dateTime, order: .reverse)
+    private var transactions: [DataTransaction]
+    
     var body: some View {
         VStack(spacing: 16) {
             Text("Recent Activities")
@@ -32,15 +36,21 @@ struct RecentActivitiesCard: View {
                     }
                 }
                 
-                rowTransactions(category: "Subscription", description: "iCloud", amount: "-Rp15.000")
-                rowTransactions(category: "Transportation", description: "Online Taxi", amount: "-Rp18.000")
-                rowTransactions(category: "Transportation", description: "Commuter", amount: "-Rp6.000")
-                rowTransactions(category: "Meals", description: "Dinner", amount: "-Rp32.500")
+                if transactions.isEmpty {
+                    Text("No recent transactions yet.")
+                        .foregroundStyle(.primaryBlack)
+                        .fontWeight(.light)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 10)
+                } else {
+                    ForEach(transactions.prefix(4)) { transaction in
+                        rowTransactions(category: transaction.category, description: transaction.transactionDescription, amount: "-Rp\(formatRupiah(String(transaction.amount)))")
+                    }
+                }
             }
             .padding(20)
             .frame(maxWidth: .infinity)
             .glassEffect(in: .rect(cornerRadius: 24))
-//            .shadow(radius: 1)
             
             NavigationLink{
                 StatisticsPage()
@@ -59,7 +69,6 @@ struct RecentActivitiesCard: View {
                 .frame(maxWidth: .infinity)
                 .clipShape(.capsule)
                 .glassEffect()
-//                .shadow(radius: 1)
             }
             
             
@@ -70,4 +79,5 @@ struct RecentActivitiesCard: View {
 
 #Preview {
     RecentActivitiesCard()
+        .modelContainer(SampleData.container)
 }

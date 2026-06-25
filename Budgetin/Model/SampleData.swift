@@ -18,7 +18,8 @@ class SampleData {
             let sampleData: [DataTransaction] = [
                 DataTransaction(amount: 45000, category: "Meals", dateTime: Date(), transactionDescription: "Dinner"),
                 DataTransaction(amount: 18000, category: "Transportation", dateTime: Date(), transactionDescription: "Online Taxi"),
-                DataTransaction(amount: 15000, category: "Subscription", dateTime: Date(), transactionDescription: "iCloud")
+                DataTransaction(amount: 15000, category: "Subscription", dateTime: Date(), transactionDescription: "iCloud"),
+                DataTransaction(amount: 105000, category: "Health", dateTime: Date(), transactionDescription: "BPJS")
             ]
             
             for item in sampleData {
