@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct EditBudgetPage: View {
-    @State private var monthlyBudget: Double = 0
-    @State private var budgetText: String = "0"
+    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
+    @State private var budgetText: String = ""
     @State private var isFormattingBudgetText: Bool = false
     @FocusState private var isBudgetTextFocused: Bool
     @Environment(\.dismiss) var dismiss
@@ -93,6 +93,9 @@ struct EditBudgetPage: View {
                     isBudgetTextFocused = false
                 }
             }
+        }
+        .onAppear{
+            budgetText = formatRupiah(String(monthlyBudget))
         }
     }
     

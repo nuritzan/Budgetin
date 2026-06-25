@@ -39,7 +39,6 @@ struct ChartCard: View {
             }
             .padding(20)
             .glassEffect(in: .rect(cornerRadius: 20))
-//            .shadow(radius: 1)
             
             HStack(spacing: 24) {
                 donutChart

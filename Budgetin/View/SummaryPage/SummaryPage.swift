@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SummaryPage: View {
     @State private var isAddTransactionSheetPresented: Bool = false
@@ -54,5 +55,6 @@ struct SummaryPage: View {
 #Preview {
     NavigationStack {
         SummaryPage()
+            .modelContainer(SampleData.container)
     }
 }
