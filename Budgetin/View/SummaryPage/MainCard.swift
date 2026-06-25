@@ -6,8 +6,35 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainCard: View {
+    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
+    @Query private var transactions: [DataTransaction]
+    
+    private var currentMonthTransactions: [DataTransaction] {
+        let calendar = Calendar.current
+        let currentMonth = calendar.component(.month, from: Date())
+        let currentYear = calendar.component(.year, from: Date())
+        
+        return transactions.filter { transaction in
+            let transMonth = calendar.component(.month, from: transaction.dateTime)
+            let transYear = calendar.component(.year, from: transaction.dateTime)
+            return transMonth == currentMonth && transYear == currentYear
+        }
+    }
+    
+    private var totalExpenses: Double {
+        let total = currentMonthTransactions.reduce(0) { sum, transaction in
+            sum + transaction.amount
+        }
+        return Double(total)
+    }
+    
+    private var remainingBudget: Double {
+        return monthlyBudget - totalExpenses
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
@@ -16,20 +43,23 @@ struct MainCard: View {
                     .foregroundStyle(Color("PrimaryBlack"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("Rp3.500.000")
+                Text("Rp\(formatRupiah(String(Int(monthlyBudget))))")
                     .font(Font.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color("PrimaryBlack"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            ProgressView(value: 596500, total: 3500000)
-                .scaleEffect(y: 2)
+            ProgressView(value: max(remainingBudget, 0), total: monthlyBudget > 0 ? monthlyBudget : 1)
+                .scaleEffect(y: 3)
                 .tint(Color("PrimaryGreen"))
             
-            Text("Rp596.500 remaining")
+            let isMinus = remainingBudget < 0
+            let absoluteRemaining = abs(remainingBudget)
+            
+            Text("\(isMinus ? "-" : "")Rp\(formatRupiah(String(Int(absoluteRemaining)))) remaining")
                 .font(Font.title2.weight(.semibold))
-                .foregroundStyle(Color("PrimaryBlack"))
+                .foregroundStyle(isMinus ? Color("PrimaryRed"): Color("PrimaryBlack"))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(20)
@@ -39,5 +69,7 @@ struct MainCard: View {
 }
 
 #Preview {
-    MainCard()
+    UserDefaults.standard.set(3500000, forKey: "monthlyBudget")
+    return MainCard()
+        .modelContainer(SampleData.container)
 }

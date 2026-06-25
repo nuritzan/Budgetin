@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SetupBudgetPage: View {
-    @State private var monthlyBudget: Double = 0
+    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
     @State private var budgetText: String = "0"
     @State private var isContinue: Bool = false
     @State private var isFormattingBudgetText: Bool = false
@@ -27,6 +27,9 @@ struct SetupBudgetPage: View {
             }
         }
         .animation(.easeInOut(duration: 0.35), value: isContinue)
+        .onAppear{
+            budgetText = formatRupiah(String(Int(monthlyBudget)))
+        }
     }
     
     private var setupBudgetContent: some View {
@@ -101,11 +104,12 @@ struct SetupBudgetPage: View {
                 } label: {
                     Text("Continue")
                         .fontWeight(.semibold)
-                        .foregroundStyle(.primaryWhite)
+                        .foregroundStyle(monthlyBudget > 0 ? Color("PrimaryWhite"): Color("PrimaryBlack").opacity(0.5))
                         .frame(width: 300, height: 35)
                 }
                 .buttonStyle(.glassProminent)
-                .tint(Color("PrimaryGreen"))
+                .tint(monthlyBudget > 0 ? Color("PrimaryGreen"): Color("CancelButton"))
+                .disabled(monthlyBudget == 0)
             }
             .frame(maxWidth: .infinity)
         }
