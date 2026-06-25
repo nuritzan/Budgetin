@@ -9,7 +9,6 @@ import SwiftUI
 import Charts
 
 struct DonutChart: View {
-//    @State private var animatedChart: [CategorySummary] = []
     
     var summaries: [CategorySummary]
     var totalExpense: Int
@@ -65,12 +64,6 @@ struct DonutChart: View {
             }
             .frame(maxWidth: .infinity)
         }
-//        .onAppear{
-//            animatedChart = summaries
-//        }
-//        .onChange(of: summaries) { _, newValue in
-//            animatedChart = newValue
-//        }
     }
 }
 
