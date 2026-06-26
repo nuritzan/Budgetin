@@ -22,3 +22,12 @@ class DataTransaction {
         self.transactionDescription = transactionDescription
     }
 }
+
+@Model
+class UserSetting {
+    var monthlyBudget: Double
+    
+    init(monthlyBudget: Double = 0) {
+        self.monthlyBudget = monthlyBudget
+    }
+}

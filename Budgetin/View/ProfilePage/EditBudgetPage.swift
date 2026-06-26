@@ -6,13 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditBudgetPage: View {
-    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
+    @Environment(\.modelContext) private var modelContext
+    @Query private var settings: [UserSetting]
+    @State private var editedBudget: Double = 0
+    
     @State private var budgetText: String = ""
     @State private var isFormattingBudgetText: Bool = false
     @FocusState private var isBudgetTextFocused: Bool
     @Environment(\.dismiss) var dismiss
+    @State private var showAlert: Bool = false
     
     var body: some View {
         ZStack{
@@ -53,9 +58,9 @@ struct EditBudgetPage: View {
                                 }
                         }
                         
-                        Slider(value: $monthlyBudget, in: 0...10_000_000, step: 50_000)
+                        Slider(value: $editedBudget, in: 0...10_000_000, step: 50_000)
                             .tint(Color("PrimaryGreen"))
-                            .onChange(of: monthlyBudget) { _, newValue in
+                            .onChange(of: editedBudget) { _, newValue in
                                 budgetText = formatRupiah(String(Int(newValue)))
                             }
                         
@@ -67,8 +72,7 @@ struct EditBudgetPage: View {
                     }
                     
                     Button{
-                        updateBudgetFromText()
-                        dismiss()
+                        showAlert = true
                     } label: {
                         Text("Save Changes")
                             .fontWeight(.semibold)
@@ -78,6 +82,7 @@ struct EditBudgetPage: View {
                     }
                     .buttonStyle(.glassProminent)
                     .tint(Color("PrimaryGreen"))
+                    .disabled(editedBudget == 0)
                 }
                 .frame(width: 340)
                 
@@ -85,17 +90,39 @@ struct EditBudgetPage: View {
             }
             .frame(width: 360)
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") {
-                    updateBudgetFromText()
-                    isBudgetTextFocused = false
-                }
+        .alert("Save your chnges", isPresented: $showAlert) {
+            Button("No", role: .cancel) {}
+            Button("Yes") {
+                updateBudgetFromText()
+                if let setting = settings.first {
+
+                        setting.monthlyBudget = editedBudget
+
+                        do {
+                            try modelContext.save()
+                        } catch {
+                            print(error)
+                        }
+
+                    }
+                dismiss()
             }
+        } message: {
+            Text("Your monthly budget will be updated.")
         }
+//        .toolbar {
+//            ToolbarItemGroup(placement: .keyboard) {
+//                Spacer()
+//                Button("Done") {
+//                    updateBudgetFromText()
+//                    isBudgetTextFocused = false
+//                }
+//            }
+//        }
         .onAppear{
-            budgetText = formatRupiah(String(monthlyBudget))
+            editedBudget = settings.first?.monthlyBudget ?? 0
+            
+            budgetText = formatRupiah(String(Int(editedBudget)))
         }
     }
     
@@ -108,7 +135,7 @@ struct EditBudgetPage: View {
         
         isFormattingBudgetText = true
         budgetText = formattedValue
-        monthlyBudget = numericValue
+        editedBudget = numericValue
         isFormattingBudgetText = false
     }
     
@@ -118,13 +145,13 @@ struct EditBudgetPage: View {
             .replacingOccurrences(of: ",", with: "")
         
         guard let value = Double(rawValue) else {
-            monthlyBudget = 0
+            editedBudget = 0
             budgetText = "0"
             return
         }
         
         let clampedValue = min(max(value, 0), 10_000_000)
-        monthlyBudget = clampedValue
+        editedBudget = clampedValue
         budgetText = formatRupiah(String(Int(clampedValue)))
     }
 }

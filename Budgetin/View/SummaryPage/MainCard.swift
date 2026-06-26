@@ -9,8 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct MainCard: View {
-    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
+    @Query private var settings: [UserSetting]
     @Query private var transactions: [DataTransaction]
+    
+    private var monthlyBudget: Double {
+        settings.first?.monthlyBudget ?? 0
+    }
     
     private var currentMonthTransactions: [DataTransaction] {
         let calendar = Calendar.current
@@ -69,7 +73,6 @@ struct MainCard: View {
 }
 
 #Preview {
-    UserDefaults.standard.set(3500000, forKey: "monthlyBudget")
-    return MainCard()
+    MainCard()
         .modelContainer(SampleData.container)
 }

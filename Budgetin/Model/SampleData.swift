@@ -13,7 +13,13 @@ class SampleData {
     static let container: ModelContainer = {
         do {
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
-            let container = try ModelContainer(for: DataTransaction.self, configurations: config)
+            let container = try ModelContainer(
+                for:
+                    DataTransaction.self,
+                UserSetting.self
+                ,
+                configurations: config
+            )
             
             let sampleData: [DataTransaction] = [
                 DataTransaction(amount: 45000, category: "Meals", dateTime: Date(), transactionDescription: "Dinner"),
@@ -25,6 +31,12 @@ class SampleData {
             for item in sampleData {
                 container.mainContext.insert(item)
             }
+            
+            let setting = UserSetting(
+                monthlyBudget: 3_500_00
+            )
+            
+            container.mainContext.insert(setting)
             
             return container
         } catch {

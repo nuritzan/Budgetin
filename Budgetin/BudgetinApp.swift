@@ -10,10 +10,19 @@ import SwiftData
 
 @main
 struct BudgetinApp: App {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            OnBoardingPage()
+            if hasCompletedOnboarding {
+                ContentView()
+            } else {
+                OnBoardingPage()
+            }
         }
-        .modelContainer(for: DataTransaction.self)
+        .modelContainer(for: [
+            DataTransaction.self,
+            UserSetting.self
+        ])
     }
 }
