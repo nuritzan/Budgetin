@@ -6,17 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SetupBudgetPage: View {
-    @AppStorage("monthlyBudget") private var monthlyBudget: Double = 0
+    @Environment(\.modelContext) private var modelContext
+    @Query private var settings: [UserSetting]
+    @State private var monthlyBudget: Double = 0
+    
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @State private var budgetText: String = "0"
-    @State private var isContinue: Bool = false
     @State private var isFormattingBudgetText: Bool = false
     @FocusState private var isBudgetTextFocused: Bool
     
     var body: some View {
         ZStack {
-            if isContinue {
+            if hasCompletedOnboarding {
                 ContentView()
                     .transition(.move(edge: .trailing))
                     .zIndex(1)
@@ -26,8 +30,12 @@ struct SetupBudgetPage: View {
                     .zIndex(0)
             }
         }
-        .animation(.easeInOut(duration: 0.35), value: isContinue)
+        .animation(.easeInOut(duration: 0.35), value: hasCompletedOnboarding)
         .onAppear{
+            if let setting = settings.first {
+                monthlyBudget = setting.monthlyBudget
+            }
+            
             budgetText = formatRupiah(String(Int(monthlyBudget)))
         }
     }
@@ -100,7 +108,25 @@ struct SetupBudgetPage: View {
                 
                 Button {
                     updateBudgetFromText()
-                    isContinue = true
+                    
+                    if let setting = settings.first {
+                        setting.monthlyBudget = monthlyBudget
+                    } else {
+                        let newSetting = UserSetting(
+                            monthlyBudget: monthlyBudget
+                        )
+                        
+                        modelContext.insert(newSetting)
+                    }
+                    
+                    do {
+                        try modelContext.save()
+                    } catch {
+                        print(error)
+                    }
+                    
+                    hasCompletedOnboarding = true
+                    
                 } label: {
                     Text("Continue")
                         .fontWeight(.semibold)
