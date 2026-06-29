@@ -92,6 +92,7 @@ struct EditBudgetPage: View {
         }
         .alert("Save your chnges", isPresented: $showAlert) {
             Button("No", role: .cancel) {}
+                .tint(.black)
             Button("Yes") {
                 updateBudgetFromText()
                 if let setting = settings.first {
@@ -107,6 +108,7 @@ struct EditBudgetPage: View {
                     }
                 dismiss()
             }
+            .tint(.black)
         } message: {
             Text("Your monthly budget will be updated.")
         }
