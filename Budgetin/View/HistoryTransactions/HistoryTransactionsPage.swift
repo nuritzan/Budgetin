@@ -10,6 +10,7 @@ import SwiftData
 
 struct HistoryTransactionsPage: View {
     @State private var isAddTransactionSheetPresented: Bool = false
+    @State private var transactionToEdit: DataTransaction?
     
     @Query(sort: \DataTransaction.dateTime, order: .reverse)
     private var transactions: [DataTransaction]
@@ -43,11 +44,15 @@ struct HistoryTransactionsPage: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
                                 ForEach(section.items) { transaction in
-                                    rowTransactions(
-                                        category: transaction.category,
-                                        description: transaction.transactionDescription,
-                                        amount: "-Rp\(formatRupiah(String(transaction.amount)))"
-                                    )
+                                    Button {
+                                        transactionToEdit = transaction
+                                    } label: {
+                                        rowTransactions(
+                                            category: transaction.category,
+                                            description: transaction.transactionDescription,
+                                            amount: "-Rp\(formatRupiah(String(transaction.amount)))"
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -75,9 +80,11 @@ struct HistoryTransactionsPage: View {
             }
             
         }
-        
         .sheet(isPresented: $isAddTransactionSheetPresented) {
             AddTransactionSheet()
+        }
+        .sheet(item: $transactionToEdit) { selectedTransaction in
+            TransactionDetailPage(transaction: selectedTransaction)
         }
     }
 }
